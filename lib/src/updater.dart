@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
-import 'package:app_installer/app_installer.dart';
 import 'package:crypto/crypto.dart' as crypto;
 import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
@@ -87,14 +85,8 @@ class UpdateResult {
       };
 
   Future<StreamController<DownloadProgress>> initializeUpdate() async {
-    if (Platform.isIOS) {
-      await runUpdate(downloadUrl);
-      throw Exception(
-          "initializeUpdate is not supported on iOS. You should use runUpdate instead");
-    } else if (Platform.isAndroid || Platform.isWindows) {
-      var dir = Platform.isAndroid
-          ? await getExternalStorageDirectory()
-          : await getTemporaryDirectory();
+ if ( Platform.isWindows) {
+      var dir =await getTemporaryDirectory();
       var urlContent = downloadUrl.split('/');
       if (urlContent.isEmpty) {
         throw Exception("The download URL may be invalid.");
