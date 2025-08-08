@@ -141,13 +141,7 @@ class UpdateResult {
   /// [autoExit] parent process, only applies to Windows
   Future<void> runUpdate(FilePath uri,
       {bool autoExit = false, int exitDelay = 3000}) async {
-    if (Platform.isIOS) {
-      await canLaunch(downloadUrl)
-          ? await launch(downloadUrl)
-          : throw Exception("Fail to launch App Store url");
-    } else if (Platform.isAndroid) {
-      await AppInstaller.installApk(uri);
-    } else if (Platform.isWindows) {
+     if (Platform.isWindows) {
       // Start the process using Windows shell instead of our parent process.
       // A detached process has no connection to its parent,
       // and can keep running on its own when the parent dies
